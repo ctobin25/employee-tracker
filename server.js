@@ -48,14 +48,17 @@ var connection = mysql.createConnection({
         if (answer.options === "Add department") {
          // postAuction();
          console.log("add department")
+         addDepartment()
         }
         else if(answer.options === "Add role") {
           //bidAuction();
           console.log("Add role")
+          addRole()
         } 
         else if(answer.options === "Add employee") {
             //bidAuction();
             console.log("Add employee")
+            addEmployee()
           }
           else if(answer.options === "View departments") {
            // bidAuction();
@@ -65,14 +68,17 @@ var connection = mysql.createConnection({
           else if(answer.options === "View roles") {
            // bidAuction();
            console.log("View roles")
+           viewRoles()
           }
           else if(answer.options === "View employees") {
            // bidAuction();
            console.log("View employees")
+           viewEmployees()
           }
           else if(answer.options === "Update employee roles") {
            // bidAuction();
            console.log("Update employee roles")
+           updateRole()
           }
         else{
           connection.end();
@@ -83,8 +89,24 @@ var connection = mysql.createConnection({
 
   } 
 
+  //functions for view
+
   function viewDepartment() {
     connection.query("SELECT * FROM department", function(err, results) {
+        if (err) throw err;
+        console.table(results)
+    })
+  }
+
+  function viewRoles() {
+    connection.query("SELECT * FROM role", function(err, results) {
+        if (err) throw err;
+        console.table(results)
+    })
+  }
+
+  function viewEmployees() {
+    connection.query("SELECT * FROM employee", function(err, results) {
         if (err) throw err;
         console.table(results)
     })
