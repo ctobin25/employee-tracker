@@ -95,6 +95,7 @@ var connection = mysql.createConnection({
     connection.query("SELECT * FROM department", function(err, results) {
         if (err) throw err;
         console.table(results)
+        console.log("")
     })
   }
 
@@ -110,4 +111,111 @@ var connection = mysql.createConnection({
         if (err) throw err;
         console.table(results)
     })
+  }
+
+  //add functions to add and update
+
+
+  function addDepartment() {
+    console.log("department")
+    inquirer
+      .prompt({
+        name: "departmentName",
+        message: "What department do you want to add?",
+      }).then(function(answer) {
+        connection.query("INSERT INTO department SET ?",{
+        name: answer.departmentName
+        },
+    
+        function(err, results) {
+        if (err) throw err;
+        console.log("created dep");
+        start();
+     })
+
+      })
+  }
+
+  // title VARCHAR(30) NOT NULL,
+  // salary DECIMAL,
+  // department_id INT,
+
+  function addRole() {
+    viewDepartment()
+    console.log("role")
+     inquirer
+      .prompt([
+
+        {
+          name: "title",
+          type: "input",
+          message: "What role do you want to add?"
+        },
+        {
+          name: "salary",
+          type: "input",
+          message: "What is the salary?"
+        },
+        {
+          name: "department_id",
+          type: "input",
+          message: "Enter in the department id number?",
+          //insert into table
+        },
+      ]).then(function(answer) {
+        connection.query("INSERT INTO role SET ?",{
+        title: answer.title,
+        salary: answer.salary,
+        department_id: answer.department_id
+
+        },
+    
+        function(err, results) {
+        if (err) throw err;
+        console.log("created dep");
+        start();
+     })
+
+      })
+  }
+
+  function addEmployee() {
+    console.log("employee")
+    inquirer
+      .prompt([
+        {
+          name: "firstName",
+          message: "What's your first name?",
+        },
+
+        {
+          name: "lastName",
+          message: "What's your last name?",
+        },
+
+        {
+          name: "role_id",
+          message: "What's your role id?",
+        },
+
+        {
+          name: "manager_id",
+          message: "What's your managers id?",
+        },
+      ]).then(function(answer) {
+        connection.query("INSERT INTO employee SET ?",{
+        first_name: answer.firstName,
+        last_name: answer.lastName,
+        role_id: answer.role_id,
+        manager_id: answer.manager_id
+        
+        },
+
+        function(err, results) {
+        if (err) throw err;
+        console.log("created dep");
+        start();
+     })
+
+      })
   }
