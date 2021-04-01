@@ -95,7 +95,7 @@ var connection = mysql.createConnection({
     connection.query("SELECT * FROM department", function(err, results) {
         if (err) throw err;
         console.table(results)
-        console.log("")
+  
     })
   }
 
@@ -141,9 +141,16 @@ var connection = mysql.createConnection({
   // department_id INT,
 
   function addRole() {
-    viewDepartment()
-    console.log("role")
-     inquirer
+ 
+    connection.query("SELECT * FROM department", function(err, results) {
+      if (err) throw err;
+      //console.log(results)
+      let department = results.map(item => ({
+        name: item.name,
+        value: item.id
+      }))
+
+      inquirer
       .prompt([
 
         {
@@ -158,8 +165,8 @@ var connection = mysql.createConnection({
         },
         {
           name: "department_id",
-          type: "input",
-          message: "Enter in the department id number?",
+          type: "list",
+          choices: department
           //insert into table
         },
       ]).then(function(answer) {
@@ -177,9 +184,37 @@ var connection = mysql.createConnection({
      })
 
       })
+
+
+
+
+  })
+
+    
   }
 
   function addEmployee() {
+    connection.query("SELECT * FROM role", function(err, results) {
+      if (err) throw err;
+      console.log(results)
+      let role = results.map(item => ({
+
+        name: item.title,
+        value: item.id
+      }))
+      
+      connection.query("SELECT * FROM employee", function(err, results) {
+        if (err) throw err;
+        console.log(results)
+        let manager = results.map(item => ({
+  
+          name: `${item.first_name} ${item.last_name}`,
+          value: item.id
+        }))
+
+
+
+
     console.log("employee")
     inquirer
       .prompt([
@@ -195,12 +230,14 @@ var connection = mysql.createConnection({
 
         {
           name: "role_id",
-          message: "What's your role id?",
+          type: "list",
+          choices: role,
         },
 
         {
           name: "manager_id",
-          message: "What's your managers id?",
+          type: "list",
+          choices: manager
         },
       ]).then(function(answer) {
         connection.query("INSERT INTO employee SET ?",{
@@ -218,4 +255,6 @@ var connection = mysql.createConnection({
      })
 
       })
+    })
+  })
   }
