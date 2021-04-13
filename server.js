@@ -113,7 +113,14 @@ var connection = mysql.createConnection({
     })
   }
 
-  //add functions to add and update
+  //add function update!!
+
+  function update() {
+
+    
+  }
+
+
 
 
   function addDepartment() {
@@ -136,9 +143,7 @@ var connection = mysql.createConnection({
       })
   }
 
-  // title VARCHAR(30) NOT NULL,
-  // salary DECIMAL,
-  // department_id INT,
+ 
 
   function addRole() {
  
@@ -167,7 +172,7 @@ var connection = mysql.createConnection({
           name: "department_id",
           type: "list",
           choices: department
-          //insert into table
+          
         },
       ]).then(function(answer) {
         connection.query("INSERT INTO role SET ?",{
@@ -215,7 +220,7 @@ var connection = mysql.createConnection({
 
 
 
-    console.log("employee")
+    
     inquirer
       .prompt([
         {
@@ -239,6 +244,7 @@ var connection = mysql.createConnection({
           type: "list",
           choices: manager
         },
+        
       ]).then(function(answer) {
         connection.query("INSERT INTO employee SET ?",{
         first_name: answer.firstName,
